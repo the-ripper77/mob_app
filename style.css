@@ -1,0 +1,46 @@
+.main-container {
+    padding: 20px;
+    background-color: #000000;
+}
+.sub-container {
+    margin: 10px 0;
+    box-sizing: border-box;
+    padding: 15px;
+    background-color: #f51212;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#div1 {
+    background-color: blue;
+    border-color: red;
+}
+#div2 {
+    background-color: green;
+    border-color: yellow;
+}
+#div3 {
+    background-color: orange;
+    border-color: purple;
+}
+#div4 {
+    background-color: pink;
+    border-color: brown;
+}
+#div5 {
+    background-color: cyan;
+    border-color: magenta;
+}
+#div6 {
+    background-color: lime;
+    border-color: navy;
+}
+#div7 {
+    background-color: teal;
+    border-color: maroon;
+}
+#div8 {
+    background-color: violet;
+    border-color: gold;
+}
