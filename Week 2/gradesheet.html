@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Sheet</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            margin-bottom: 10px;
+        }
+        #display messgae {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Grade Sheet</h1>
+
+    <label for="English">English:</label>
+    <input type="number" id="English" name="English">
+
+    <label for="Nepali">Nepali:</label>
+    <input type="number" id="Nepali" name="Nepali">
+
+    <label for="Science">Science:</label>
+    <input type="number" id="Science" name="Science">
+
+    <label for="Maths">Maths:</label>
+    <input type="number" id="Maths" name="Maths">
+
+    <label for="Social Studies">Social Studies:</label>
+    <input type="number" id="Social Studies" name="Social Studies">
+
+    <label for="Optional Math">Optional Math:</label>
+    <input type="number" id="Optional Math" name="Optional Math">
+
+    <label for="Computer Science">Computer Science:</label>
+    <input type="number" id="Computer Science" name="Computer Science">
+
+    <label for="Health">Health:</label>
+    <input type="number" id="Health" name="Health">
+
+    <br>
+    
+    <div id="total"></div>
+    <div id="result"></div>
+
+    <br>
+
+    <button type="button" onclick="calculateGrades()">Calculate Grades</button>
+
+    <script>
+
+        let text;
+        function calculateGrades() {
+
+            let englishMarks = Number(document.getElementById("English").value);
+            let nepaliMarks = Number(document.getElementById("Nepali").value);
+            let scienceMarks = Number(document.getElementById("Science").value);
+            let mathsMarks = Number(document.getElementById("Maths").value);
+            let socialStudiesMarks = Number(document.getElementById("Social Studies").value);
+            let optionalMathMarks = Number(document.getElementById("Optional Math").value);
+            let computerScienceMarks = Number(document.getElementById("Computer Science").value);
+            let healthMarks = Number(document.getElementById("Health").value);
+
+            let totalMarks = englishMarks + nepaliMarks + scienceMarks + mathsMarks + socialStudiesMarks + optionalMathMarks + computerScienceMarks + healthMarks;
+
+            let totalDiv = document.getElementById("total");
+            totalDiv.innerHTML = "Total Marks: " + totalMarks;
+
+            text = document.getElementById("result");
+
+            if (totalMarks >= 700) {
+                text.innerHTML = "Distinction";
+                text.style.color = "green";
+            } else if (totalMarks >= 600) {
+                text.innerHTML = "First Division";
+            } else if (totalMarks >= 500) {
+                text.innerHTML = "Second Division";
+            } else if (totalMarks >= 400) {
+                text.innerHTML = "Third Division";
+            } else {
+                text.innerHTML = "Fail";
+                text.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+.main-container {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    background-color: lightskyblue;
+    border: 1px solid black;
+}
+
+.operators {
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
+}
+
+#addition {
+    background-color: red;
+}
+
+#subtraction {
+    background-color: blue;
+}
+
+#multiplication {
+    background-color: green;
+}
+
+#division {
+    background-color: yellow;
+}
