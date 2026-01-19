@@ -17,7 +17,7 @@
         input {
             margin-bottom: 10px;
         }
-        #display messgae {
+        #total, #result {
             margin-top: 20px;
             font-weight: bold;
         }
@@ -27,72 +27,68 @@
 
     <h1>Grade Sheet</h1>
 
-    <label for="English">English:</label>
-    <input type="number" id="English" name="English">
+    <label for="english">English:</label>
+    <input type="number" id="english">
 
-    <label for="Nepali">Nepali:</label>
-    <input type="number" id="Nepali" name="Nepali">
+    <label for="nepali">Nepali:</label>
+    <input type="number" id="nepali">
 
-    <label for="Science">Science:</label>
-    <input type="number" id="Science" name="Science">
+    <label for="science">Science:</label>
+    <input type="number" id="science">
 
-    <label for="Maths">Maths:</label>
-    <input type="number" id="Maths" name="Maths">
+    <label for="maths">Maths:</label>
+    <input type="number" id="maths">
 
-    <label for="Social Studies">Social Studies:</label>
-    <input type="number" id="Social Studies" name="Social Studies">
+    <label for="socialStudies">Social Studies:</label>
+    <input type="number" id="socialStudies">
 
-    <label for="Optional Math">Optional Math:</label>
-    <input type="number" id="Optional Math" name="Optional Math">
+    <label for="optionalMath">Optional Math:</label>
+    <input type="number" id="optionalMath">
 
-    <label for="Computer Science">Computer Science:</label>
-    <input type="number" id="Computer Science" name="Computer Science">
+    <label for="computerScience">Computer Science:</label>
+    <input type="number" id="computerScience">
 
-    <label for="Health">Health:</label>
-    <input type="number" id="Health" name="Health">
-
-    <br>
-    
-    <div id="total"></div>
-    <div id="result"></div>
+    <label for="health">Health:</label>
+    <input type="number" id="health">
 
     <br>
 
     <button type="button" onclick="calculateGrades()">Calculate Grades</button>
 
+    <div id="total"></div>
+    <div id="result"></div>
+
     <script>
-
-        let text;
         function calculateGrades() {
+            let totalMarks =Number(document.getElementById("english").value) +
+            Number(document.getElementById("nepali").value) +
+            Number(document.getElementById("maths").value) +
+            Number(document.getElementById("science").value) +
+            Number(document.getElementById("socialStudies").value) +
+            Number(document.getElementById("optionalMath").value) +
+            Number(document.getElementById("computerScience").value) +
+            Number(document.getElementById("health").value);
 
-            let englishMarks = Number(document.getElementById("English").value);
-            let nepaliMarks = Number(document.getElementById("Nepali").value);
-            let scienceMarks = Number(document.getElementById("Science").value);
-            let mathsMarks = Number(document.getElementById("Maths").value);
-            let socialStudiesMarks = Number(document.getElementById("Social Studies").value);
-            let optionalMathMarks = Number(document.getElementById("Optional Math").value);
-            let computerScienceMarks = Number(document.getElementById("Computer Science").value);
-            let healthMarks = Number(document.getElementById("Health").value);
+            document.getElementById("total").innerHTML =
+                "Total Marks: " + totalMarks;
 
-            let totalMarks = englishMarks + nepaliMarks + scienceMarks + mathsMarks + socialStudiesMarks + optionalMathMarks + computerScienceMarks + healthMarks;
-
-            let totalDiv = document.getElementById("total");
-            totalDiv.innerHTML = "Total Marks: " + totalMarks;
-
-            text = document.getElementById("result");
+            let result = document.getElementById("result");
 
             if (totalMarks >= 700) {
-                text.innerHTML = "Distinction";
-                text.style.color = "green";
+                result.innerHTML = "Result: Distinction";
+                result.style.color = "green";
             } else if (totalMarks >= 600) {
-                text.innerHTML = "First Division";
+                result.innerHTML = "Result: First Division";
+                result.style.color = "black";
             } else if (totalMarks >= 500) {
-                text.innerHTML = "Second Division";
+                result.innerHTML = "Result: Second Division";
+                result.style.color = "black";
             } else if (totalMarks >= 400) {
-                text.innerHTML = "Third Division";
+                result.innerHTML = "Result: Third Division";
+                result.style.color = "black";
             } else {
-                text.innerHTML = "Fail";
-                text.style.color = "red";
+                result.innerHTML = "Result: Fail";
+                result.style.color = "red";
             }
         }
     </script>
