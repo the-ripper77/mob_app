@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media</title>
+
+  <style>
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .gallery img {
+      width: 400px;
+      height: auto;
+    }
+
+    @media screen and (min-width: 760px) {
+      .gallery img {
+        width: 300px;
+      }
+    }
+
+    @media screen and (min-width: 920px) {
+      .gallery img {
+        flex: 0 0 calc(25% - 20px);
+        max-width: calc(25% - 20px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="gallery">
+    <img src="https://i.pinimg.com/736x/3d/3e/6e/3d3e6eb1defbf2921884226a85b6d5b6.jpg">
+    <img src="https://i.pinimg.com/736x/8e/a0/0c/8ea00c88a72c9388fed742fcd54814fc.jpg">
+    <img src="https://i.pinimg.com/736x/3c/5c/d2/3c5cd29f391faed6e802c59fedfbf374.jpg">
+    <img src="https://i.pinimg.com/736x/58/c7/61/58c761ff29784f356dbb17093ef5c3ad.jpg">
+    <img src="https://i.pinimg.com/736x/b3/b6/cf/b3b6cfc8c6ab9a412ffc81d76aed3f60.jpg">
+    <img src="https://i.pinimg.com/736x/1b/af/03/1baf033af09947d39c7c4cafff173058.jpg">
+    <img src="https://i.pinimg.com/736x/3a/b4/69/3ab469fd300a2aa51e0289586de2dace.jpg">
+    <img src="https://i.pinimg.com/736x/f2/0c/bd/f20cbdc2cfabc599e1ebe5884b0be5e6.jpg">
+    <img src="https://i.pinimg.com/736x/3e/97/35/3e973523185d1b98eb1f91b2614996c5.jpg">
+    <img src="https://i.pinimg.com/736x/74/92/47/7492472891723590228575e26eb81f33.jpg">
+  </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Week 3</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #container {
+            position: relative;
+            width: 350px;
+            height: 350px;
+        }
+
+        .shape {
+            position: absolute;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+
+            const positions = [
+                { top: 0, left: 0 },
+                { top: 0, left: 200 },
+                { top: 200, left: 0 },
+                { top: 200, left: 200 }
+            ];
+
+            $("button").click(function () {
+                positions.sort(() => Math.random() - 0.5);
+
+                $("#box").animate(positions[0], 600);
+                $("#circle").animate(positions[1], 600);
+                $("#triangle").animate(positions[2], 600);
+                $("#rectangle").animate(positions[3], 600);
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <div>
+        <center><button>Shuffle</button></center><br><br>
+
+        <div id="container">
+            <div id="box" class="shape" style="width:100px;height:100px;background:purple;"></div>
+
+            <div id="circle" class="shape" style="width:100px;height:100px;background:blue;border-radius:50%;"></div>
+
+            <div id="triangle" class="shape" style="width:0;height:0;
+                border-left:50px solid transparent;
+                border-right:50px solid transparent;
+                border-bottom:100px solid olive;"></div>
+
+            <div id="rectangle" class="shape" style="width:150px;height:75px;background:red;"></div>
+        </div>
+    </div>
+
+</body>
+</html>
