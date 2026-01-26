@@ -1,71 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Week 3</title>
+<meta charset="UTF-8">
+<title>Week 3</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    .container {
+        position: relative;
+        width: 120px;
+        height: 520px;
+        margin: 30px auto;
+    }
+
+    .box {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        border: 2px solid black;
+        background: lightblue;
+        left: 0;
+    }
+
+    h1 {
+        margin: 0;
+        line-height: 100px;
+        color: white;
+    }
+
+    button {
+        padding: 10px 25px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+</style>
+
+<script>
+$(document).ready(function () {
+
+    var boxes = [
+        $("#div1"),
+        $("#div2"),
+        $("#div3"),
+        $("#div4")
+    ];
+
+    var positions = [0, 120, 240, 360]; 
+    var colors = ["red", "orange", "blue", "green"];
+
+    for (let i = 0; i < boxes.length; i++) {
+        boxes[i].css("top", positions[i] + "px");
+    }
+
+    $("#startBtn").click(function () {
+        positions.sort(() => Math.random() - 0.5);
+
+        for (let i = 0; i < boxes.length; i++) {
+            boxes[i]
+                .css("background", colors[i])
+                .animate({ top: positions[i], opacity: 0.5 }, 1000)
+                .animate({ opacity: 1 }, 200);
         }
+    });
 
-        #container {
-            position: relative;
-            width: 350px;
-            height: 350px;
-        }
-
-        .shape {
-            position: absolute;
-        }
-    </style>
-
-    <script>
-        $(document).ready(function () {
-
-            const positions = [
-                { top: 0, left: 0 },
-                { top: 0, left: 200 },
-                { top: 200, left: 0 },
-                { top: 200, left: 200 }
-            ];
-
-            $("button").click(function () {
-                positions.sort(() => Math.random() - 0.5);
-
-                $("#box").animate(positions[0], 600);
-                $("#circle").animate(positions[1], 600);
-                $("#triangle").animate(positions[2], 600);
-                $("#rectangle").animate(positions[3], 600);
-            });
-        });
-    </script>
+});
+</script>
 </head>
 
 <body>
 
-    <div>
-        <center><button>Shuffle</button></center><br><br>
+<h2>Shuffle Animation</h2>
 
-        <div id="container">
-            <div id="box" class="shape" style="width:100px;height:100px;background:purple;"></div>
+<div class="container">
+    <div class="box" id="div1"><h1>1</h1></div>
+    <div class="box" id="div2"><h1>2</h1></div>
+    <div class="box" id="div3"><h1>3</h1></div>
+    <div class="box" id="div4"><h1>4</h1></div>
+</div>
 
-            <div id="circle" class="shape" style="width:100px;height:100px;background:blue;border-radius:50%;"></div>
-
-            <div id="triangle" class="shape" style="width:0;height:0;
-                border-left:50px solid transparent;
-                border-right:50px solid transparent;
-                border-bottom:100px solid olive;"></div>
-
-            <div id="rectangle" class="shape" style="width:150px;height:75px;background:red;"></div>
-        </div>
-    </div>
+<button id="startBtn">Start Animation</button>
 
 </body>
 </html>
