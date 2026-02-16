@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Firebase Realtime DB Demo</title>
+</head>
+<body>
+    <h1>Firebase Realtime Database CRUD</h1>
+    <h2>Create / Write User</h2>
+    <input type="text" id="create-id" placeholder="User ID" />
+    <input type="text" id="create-firstName" placeholder="First Name" />
+    <input type="text" id="create-lastName" placeholder="Last Name" />
+    <input type="email" id="create-email" placeholder="Email" />
+    <input type="text" id="create-phoneNumber" placeholder="Phone Number" />
+    <input type="number" id="create-age" placeholder="Age" />
+    <input type="text" id="create-gender" placeholder="Gender" />
+    <input type="text" id="create-address" placeholder="Address" />
+    <input type="text" id="create-city" placeholder="City" />
+    <input type="text" id="create-country" placeholder="Country" />
+    <input type="text" id="create-occupation" placeholder="Occupation" />
+    <button onclick="writeUserData(
+        document.getElementById('create-id').value,
+        document.getElementById('create-firstName').value,
+        document.getElementById('create-lastName').value,
+        document.getElementById('create-email').value,
+        document.getElementById('create-phoneNumber').value,
+        document.getElementById('create-age').value,
+        document.getElementById('create-gender').value,
+        document.getElementById('create-address').value,
+        document.getElementById('create-city').value,
+        document.getElementById('create-country').value,
+        document.getElementById('create-occupation').value
+    )">Write User</button>
+
+    <h2>Users List</h2>
+    <div id="users-list"></div>
+    <button onclick="readUser()">Load Users</button>
+
+    <h2>Update User</h2>
+    <input type="text" id="update-id" placeholder="User ID" />
+    <input type="text" id="update-firstName" placeholder="New First Name" />
+    <input type="text" id="update-lastName" placeholder="New Last Name" />
+    <input type="email" id="update-email" placeholder="New Email" />
+    <input type="text" id="update-phoneNumber" placeholder="New Phone Number" />
+    <input type="number" id="update-age" placeholder="New Age" />
+    <input type="text" id="update-gender" placeholder="New Gender" />
+    <input type="text" id="update-address" placeholder="New Address" />
+    <input type="text" id="update-city" placeholder="New City" />
+    <input type="text" id="update-country" placeholder="New Country" />
+    <input type="text" id="update-occupation" placeholder="New Occupation" />
+    <button onclick="updateUserData(
+      document.getElementById('update-id').value,
+      {
+        firstName: document.getElementById('update-firstName').value,
+        lastName: document.getElementById('update-lastName').value,
+        email: document.getElementById('update-email').value,
+        phoneNumber: document.getElementById('update-phoneNumber').value,
+        age: document.getElementById('update-age').value,
+        gender: document.getElementById('update-gender').value,
+        address: document.getElementById('update-address').value,
+        city: document.getElementById('update-city').value,
+        country: document.getElementById('update-country').value,
+        occupation: document.getElementById('update-occupation').value
+      }
+    )">Update User</button>
+
+    <h2>Delete User</h2>
+    <input type="text" id="delete-id" placeholder="User ID" /> 
+    <button onclick="deleteUserData(
+      document.getElementById('delete-id').value
+    )">Delete User</button>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
