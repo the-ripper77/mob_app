@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "14321173976",
+    "firebase_url": "https://potato-36643-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "potato-36643",
+    "storage_bucket": "potato-36643.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14321173976:android:a267831cd8ca83c7411ead",
+        "android_client_info": {
+          "package_name": "com.pg7zoro.asset"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvorzVe8-tty18v_Yg0VCcpgJVRS8a31s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

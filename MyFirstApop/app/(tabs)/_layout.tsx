@@ -48,6 +48,30 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <Ionicons size={24} name="bar-chart-outline" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color }) => <Ionicons size={24} name="settings-outline" color={color} />,
+        }}
+      />
+      {/* Sub-routes hidden from tab bar */}
+      <Tabs.Screen
+        name="asset"
+        options={{ href: null, tabBarStyle: { display: 'none' } }}
+      />
+      <Tabs.Screen
+        name="location"
+        options={{ href: null, tabBarStyle: { display: 'none' } }}
+      />
+      <Tabs.Screen
+        name="employee/new"
+        options={{ href: null, tabBarStyle: { display: 'none' } }}
+      />
+      <Tabs.Screen
+        name="vendor/new"
+        options={{ href: null, tabBarStyle: { display: 'none' } }}
+      />
     </Tabs>
   );
 }

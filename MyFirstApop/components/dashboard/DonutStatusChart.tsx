@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import type { AssetStatus } from '@/data/mockData';
-import { STATUS_COLORS } from '@/data/mockData';
+import type { AssetStatus } from '@/data/types';
+import { STATUS_COLORS } from '@/data/types';
 
 type Datum = { x: AssetStatus; y: number };
 

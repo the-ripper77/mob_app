@@ -1,48 +1,77 @@
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router, type Href } from 'expo-router';
 
-import { activities, assets, categories, KPI, statusBreakdown } from '@/data/mockData';
+import { useAuth } from '@/contexts/AuthContext';
 import { ActivityRow } from '@/components/dashboard/ActivityRow';
 import { CategoryCard } from '@/components/dashboard/CategoryCard';
-import { DonutStatusChart } from '@/components/dashboard/DonutStatusChart';
-import { FilterChip } from '@/components/dashboard/FilterChip';
 import { FloatingActionButton } from '@/components/dashboard/FloatingActionButton';
 import { KpiCard } from '@/components/dashboard/KpiCard';
 import { SectionHeader } from '@/components/dashboard/SectionHeader';
-
-type FilterType = 'My Assets' | 'Unassigned' | 'Due for Maintenance' | 'By Location';
-
-const FILTERS: FilterType[] = [
-  'My Assets',
-  'Unassigned',
-  'Due for Maintenance',
-  'By Location',
-];
+import type { AssetStatus } from '@/data/types';
+import { useActivities } from '@/hooks/useActivities';
+import { useAssets } from '@/hooks/useAssets';
+import { useCategories } from '@/hooks/useCategories';
+import { timeAgo } from '@/lib/timeAgo';
+import { TopBar } from '@/components/TopBar';
+import { useTranslation } from 'react-i18next';
 
 export default function DashboardScreen() {
-  const [selectedFilter, setSelectedFilter] = useState<FilterType>('My Assets');
+  const { user, signOut } = useAuth();
+  const { assets, loading: assetsLoading } = useAssets();
+  const { categories, loading: categoriesLoading } = useCategories();
+  const { activities, loading: activitiesLoading } = useActivities(10);
+  const { t } = useTranslation();
+  const initial = user?.email?.charAt(0).toUpperCase() ?? 'A';
+
+  const { kpi, statusBreakdown, categoryCounts } = useMemo(() => {
+    const statusCounts: Record<AssetStatus, number> = {
+      Available: 0,
+      Maintenance: 0,
+      Assigned: 0,
+      Lost: 0,
+      Scrapped: 0,
+    };
+    for (const a of assets) {
+      statusCounts[a.status]++;
+    }
+    const total = assets.length;
+    const statusBreakdownData = (['Available', 'Maintenance', 'Assigned', 'Lost', 'Scrapped'] as const).map(
+      (x) => ({ x, y: statusCounts[x] })
+    );
+    const categoryCountsMap: Record<string, number> = {};
+    for (const a of assets) {
+      categoryCountsMap[a.categoryName] = (categoryCountsMap[a.categoryName] ?? 0) + 1;
+    }
+    const categoryCounts = categories.map((c) => ({ ...c, count: categoryCountsMap[c.name] ?? 0 }));
+    const kpi = {
+      totalAssets: total,
+      inUse: statusCounts.Assigned,
+      inMaintenance: statusCounts.Maintenance,
+      available: statusCounts.Available,
+      lost: statusCounts.Lost,
+      scrap: statusCounts.Scrapped,
+    };
+    return { kpi, statusBreakdown: statusBreakdownData, categoryCounts };
+  }, [assets, categories]);
+
+  function handleSignOut() {
+    Alert.alert('Sign out', 'Are you sure you want to sign out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Sign out', style: 'destructive', onPress: async () => {
+          await signOut();
+          router.replace('/(auth)/login');
+        }
+      },
+    ]);
+  }
 
   return (
     <SafeAreaView style={styles.root} edges={['top', 'left', 'right']}>
-      {/* Fixed top app bar */}
-      <View style={styles.topBarContainer}>
-        <View style={styles.topBar}>
-          <View style={styles.topBarLeft}>
-            <Text style={styles.appName}>Zoro Assets</Text>
-            <Text style={styles.appSubtitle}>Dashboard</Text>
-          </View>
-          <View style={styles.topBarRight}>
-            <View style={styles.iconCircle}>
-              <Ionicons name="notifications-outline" size={18} color="#0F172A" />
-            </View>
-            <View style={[styles.iconCircle, styles.avatarCircle]}>
-              <Text style={styles.avatarText}>A</Text>
-            </View>
-          </View>
-        </View>
-      </View>
+      <TopBar />
 
       <ScrollView
         style={styles.screen}
@@ -52,14 +81,14 @@ export default function DashboardScreen() {
         {/* KPI row */}
         <View style={styles.kpiRow}>
           <KpiCard
-            label="Total Assets"
-            value={KPI.totalAssets}
+            label={t('dashboard.kpi.totalAssets')}
+            value={kpi.totalAssets}
             icon="layers-outline"
             style={styles.kpiHalf}
           />
           <KpiCard
-            label="In Use"
-            value={KPI.inUse}
+            label={t('dashboard.kpi.inUse')}
+            value={kpi.inUse}
             icon="people-outline"
             tone="info"
             style={styles.kpiHalf}
@@ -69,23 +98,23 @@ export default function DashboardScreen() {
         <View style={styles.kpiRow}>
           <View style={styles.kpiColumn}>
             <KpiCard
-              label="In Maintenance"
-              value={KPI.inMaintenance}
+              label={t('dashboard.kpi.inMaintenance')}
+              value={kpi.inMaintenance}
               icon="build-outline"
               tone="warning"
               style={styles.kpiMaintenance}
             />
             <View style={styles.kpiMiniRow}>
               <KpiCard
-                label="Lost"
-                value={KPI.lost}
+                label={t('dashboard.kpi.lost')}
+                value={kpi.lost}
                 icon="alert-circle-outline"
                 tone="danger"
                 style={styles.kpiMini}
               />
               <KpiCard
-                label="Scrap"
-                value={KPI.scrap}
+                label={t('dashboard.kpi.scrap')}
+                value={kpi.scrap}
                 icon="trash-outline"
                 tone="danger"
                 style={styles.kpiMini}
@@ -94,45 +123,18 @@ export default function DashboardScreen() {
           </View>
 
           <KpiCard
-            label="Available"
-            value={KPI.available}
+            label={t('dashboard.kpi.available')}
+            value={kpi.available}
             icon="checkmark-circle-outline"
             tone="success"
             style={styles.kpiSideTall}
           />
         </View>
 
-        {/* Asset status overview */}
-        <SectionHeader title="Asset Status Overview" />
-        <View style={styles.card}>
-          <View style={styles.statusRow}>
-            <DonutStatusChart data={statusBreakdown} totalLabel="Assets" />
-          </View>
-        </View>
-        
-        {/* Smart filters */}
-        <SectionHeader title="Smart Filters" />
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.filterRow}
-        >
-          {FILTERS.map(function (filter) {
-            return (
-              <FilterChip
-                key={filter}
-                label={filter}
-                selected={selectedFilter === filter}
-                onPress={() => setSelectedFilter(filter)}
-              />
-            );
-          })}
-        </ScrollView>
-
         {/* Asset categories */}
-        <SectionHeader title="Asset Categories" />
+        <SectionHeader title={t('dashboard.assetCategories')} />
         <View style={styles.categoryGrid}>
-          {categories.map((category) => (
+          {categoryCounts.map((category) => (
             <CategoryCard
               key={category.id}
               name={category.name}
@@ -141,64 +143,83 @@ export default function DashboardScreen() {
                 category.name === 'IT Equipment'
                   ? 'laptop'
                   : category.name === 'Vehicles'
-                  ? 'car-sports'
-                  : category.name === 'Machinery'
-                  ? 'factory'
-                  : 'sofa-single'
+                    ? 'car-sports'
+                    : category.name === 'Machinery'
+                      ? 'factory'
+                      : 'sofa-single'
               }
             />
           ))}
         </View>
 
         {/* Recent activity */}
-        <SectionHeader title="Recent Activity" />
+        <SectionHeader title={t('dashboard.recentActivity')} />
         <View style={styles.card}>
-          {activities.map((activity) => (
-            <ActivityRow
-              key={activity.id}
-              message={activity.message}
-              time={activity.time}
-            />
-          ))}
+          {activitiesLoading ? (
+            <Text style={styles.muted}>Loading activity…</Text>
+          ) : activities.length === 0 ? (
+            <Text style={styles.muted}>{t('dashboard.noActivity')}</Text>
+          ) : (
+            activities.map((activity) => (
+              <ActivityRow
+                key={activity.id}
+                message={activity.message}
+                time={timeAgo(activity.createdAt)}
+              />
+            ))
+          )}
         </View>
 
-        {/* Sample asset list */}
-        <SectionHeader title="Sample Assets" />
+        {/* Recent assets */}
+        <SectionHeader title={t('dashboard.recentAssets')} />
         <View style={styles.card}>
-          {assets.map((asset) => (
-            <View key={asset.id} style={styles.assetRow}>
-              <View style={styles.assetLeft}>
-                <Text style={styles.assetName}>{asset.name}</Text>
-                <Text style={styles.assetMeta}>
-                  {asset.id} • {asset.location}
-                </Text>
-              </View>
-              <View style={styles.assetRight}>
-                <Text
-                  style={[
-                    styles.assetStatus,
-                    asset.status === 'Active'
-                      ? styles.statusActive
-                      : asset.status === 'Maintenance'
-                      ? styles.statusMaintenance
-                      : asset.status === 'Assigned'
-                      ? styles.statusAssigned
-                      : styles.statusOffline,
-                  ]}>
-                  {asset.status}
-                </Text>
-                <Text style={styles.assetAssignee}>
-                  {asset.assignedTo ? asset.assignedTo : 'Unassigned'}
-                </Text>
-              </View>
-            </View>
-          ))}
+          {assetsLoading ? (
+            <Text style={styles.muted}>Loading…</Text>
+          ) : assets.length === 0 ? (
+            <Text style={styles.muted}>{t('dashboard.noAssets')}</Text>
+          ) : (
+            assets.slice(0, 5).map((asset) => (
+              <Pressable
+                key={asset.id}
+                style={styles.assetRow}
+                onPress={() => router.push(`/asset/${asset.id}` as Href)}>
+                <View style={styles.assetLeft}>
+                  <Text style={styles.assetName}>{asset.name}</Text>
+                  <Text style={styles.assetMeta}>
+                    {asset.id} • {asset.locationName}
+                  </Text>
+                </View>
+                <View style={styles.assetRight}>
+                  <Text
+                    style={[
+                      styles.assetStatus,
+                      asset.status === 'Available'
+                        ? styles.statusAvailable
+                        : asset.status === 'Maintenance'
+                          ? styles.statusMaintenance
+                          : asset.status === 'Assigned'
+                            ? styles.statusAssigned
+                            : styles.statusOffline,
+                    ]}>
+                    {asset.status}
+                  </Text>
+                  <Text style={styles.assetAssignee}>
+                    {asset.assignedTo ? asset.assignedTo : 'Unassigned'}
+                  </Text>
+                </View>
+              </Pressable>
+            ))
+          )}
         </View>
       </ScrollView>
 
       <FloatingActionButton
-        onAdd={() => {}}
-        onScan={() => {}}
+        onAddAsset={() => router.push('/asset/add' as Href)}
+        onAddEmployee={() => router.push('/employee/new' as Href)}
+        onAddVendor={() => router.push('/vendor/new' as Href)}
+        onAddLocation={() => router.push('/location/add' as Href)}
+        onAssignAsset={() => router.push('/(tabs)/asset/assign' as Href)}
+        onScanAsset={() => router.push('/scan?mode=lookup' as Href)}
       />
     </SafeAreaView>
   );
@@ -365,7 +386,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     color: '#FFFFFF',
   },
-  statusActive: {
+  statusAvailable: {
     backgroundColor: '#16A34A',
   },
   statusMaintenance: {
@@ -382,6 +403,11 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '700',
     color: '#334155',
+  },
+  muted: {
+    fontSize: 13,
+    color: '#94A3B8',
+    paddingVertical: 8,
   },
 });
 

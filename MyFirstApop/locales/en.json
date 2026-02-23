@@ -1,0 +1,62 @@
+{
+  "dashboard": {
+    "appName": "Zoro Assets",
+    "subtitle": "Dashboard",
+    "kpi": {
+      "totalAssets": "Total Assets",
+      "inUse": "In Use",
+      "inMaintenance": "In Maintenance",
+      "available": "Available",
+      "lost": "Lost",
+      "scrap": "Scrap"
+    },
+    "assetCategories": "Asset Categories",
+    "recentActivity": "Recent Activity",
+    "recentAssets": "Recent Assets",
+    "noActivity": "No activity yet. Add or edit assets to see updates.",
+    "noAssets": "No assets yet. Tap + to add one."
+  },
+  "settings": {
+    "title": "Zoro Assets",
+    "userRole": "User",
+    "notifications": "Notifications",
+    "account": "Account",
+    "language": "Language",
+    "logOut": "Log Out",
+    "languageSelectorTitle": "Select Language",
+    "english": "English",
+    "nepali": "Nepali",
+    "cancel": "Cancel"
+  },
+  "topBar": {
+    "appName": "Zoro Assets"
+  },
+  "locations": {
+    "title": "Locations",
+    "sub": "{{count}} locations",
+    "noLocations": "No locations yet",
+    "noLocationsSub": "Add places where assets are stored or used",
+    "addLocation": "Add location"
+  },
+  "assets": {
+    "title": "Inventory",
+    "sub": "{{count}} of {{total}} assets",
+    "searchPlaceholder": "Search by name\u2026",
+    "all": "All",
+    "noAssets": "No assets yet",
+    "noMatchingAssets": "No matching assets",
+    "tapToAdd": "Tap + to onboard your first asset",
+    "tryDifferentSearch": "Try a different search or category",
+    "edit": "Edit"
+  },
+  "reports": {
+    "title": "Reports & Analytics",
+    "crunching": "Crunching Report Data...",
+    "dataExportView": "Data Export View",
+    "exportCsv": "Export to CSV",
+    "noReliability": "No reliable data issues found.",
+    "noEmployees": "No employees have assets.",
+    "noVendorLogs": "No vendor maintenance logs.",
+    "selectEngine": "Select a report engine above to view data."
+  }
+}

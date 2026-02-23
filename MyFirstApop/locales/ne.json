@@ -1,0 +1,62 @@
+{
+    "dashboard": {
+        "appName": "Zoro Assets",
+        "subtitle": "ड्यासबोर्ड",
+        "kpi": {
+            "totalAssets": "कुल सम्पत्तिहरु",
+            "inUse": "प्रयोगमा",
+            "inMaintenance": "मर्मतमा",
+            "available": "उपलब्ध",
+            "lost": "हराएको",
+            "scrap": "कवाडी"
+        },
+        "assetCategories": "सम्पत्ति कोटिहरु",
+        "recentActivity": "भर्खरको गतिविधि",
+        "recentAssets": "भर्खरका सम्पत्तिहरु",
+        "noActivity": "कुनै गतिविधि छैन। अद्यावधिकहरू हेर्न सम्पत्ति थप्नुहोस् वा सम्पादन गर्नुहोस्।",
+        "noAssets": "कुनै सम्पत्ति छैन। + ट्याप गरेर नयाँ थप्नुहोस्।"
+    },
+    "settings": {
+        "title": "Zoro Assets",
+        "userRole": "प्रयोगकर्ता",
+        "notifications": "सूचनाहरू",
+        "account": "खाता",
+        "language": "भाषा",
+        "logOut": "लग आउट गर्नुहोस्",
+        "languageSelectorTitle": "भाषा चयन गर्नुहोस्",
+        "english": "English",
+        "nepali": "नेपाली",
+        "cancel": "रद्द गर्नुहोस्"
+    },
+    "topBar": {
+        "appName": "Zoro Assets"
+    },
+    "locations": {
+        "title": "स्थानहरू",
+        "sub": "{{count}} स्थानहरू",
+        "noLocations": "कुनै स्थानहरू छैनन्",
+        "noLocationsSub": "सम्पत्ति राखिने वा प्रयोग गरिने ठाउँ थप्नुहोस्",
+        "addLocation": "स्थान थप्नुहोस्"
+    },
+    "assets": {
+        "title": "इन्भेन्टरी",
+        "sub": "{{total}} मध्ये {{count}} सम्पत्तिहरू",
+        "searchPlaceholder": "नामबाट खोज्नुहोस्\u2026",
+        "all": "सबै",
+        "noAssets": "कुनै सम्पत्ति छैन",
+        "noMatchingAssets": "कुनै मिल्दो सम्पत्ति छैन",
+        "tapToAdd": "पहिलो सम्पत्ति थप्न + ट्याप गर्नुहोस्",
+        "tryDifferentSearch": "फरक खोज वा कोटि प्रयास गर्नुहोस्",
+        "edit": "सम्पादन गर्नुहोस्"
+    },
+    "reports": {
+        "title": "रिपोर्ट र एनालिटिक्स",
+        "crunching": "रिपोर्ट डाटा प्रशोधन गर्दै...",
+        "dataExportView": "डाटा निर्यात दृश्य",
+        "exportCsv": "CSV मा निर्यात गर्नुहोस्",
+        "noReliability": "कुनै विश्वसनीय डाटा समस्याहरू पाइएन।",
+        "noEmployees": "कुनै पनि कर्मचारीसँग सम्पत्ति छैन।",
+        "noVendorLogs": "कुनै भेन्डर मर्मत रेकर्ड छैन।",
+        "selectEngine": "डाटा हेर्न माथिबाट रिपोर्ट इन्जिन चयन गर्नुहोस्।"
+    }
+}
